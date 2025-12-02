@@ -27,40 +27,45 @@ $this->title = 'Apples';
                 <br>
                 <br>
                 <br>
-                <?
-                    echo GridView::widget([
-                        'dataProvider' => $dataProvider,
-                        'columns' => [
-                            ['class' => 'yii\grid\SerialColumn'],
-                            'id',
-                            'color',
-                            'status',
-                            'intact_percent',
-                            [
-                                'attribute' => 'action',
-                                'content' => function (Apple $apple) {
-                                    if ($apple->canFall()) {
-                                        return $this->render(
-                                            '_fall',
-                                            ['fallForm' => new FallForm(['apple_id' => $apple->id])
-                                        ]);
-                                    }
-                                    if ($apple->canTakeABit()) {
-                                        return $this->render(
-                                            '_take_a_bit',
-                                            [
-                                                'takeABitForm' => new TakeABitForm(['apple_id' => $apple->id]),
-                                                'maxPercent' => $apple->intact_percent
-                                            ]
-                                        );
-                                    }
-                                },
-                            ],
-                        ],
-                    ]);
-                ?>
             </div>
         </div>
+
+        <?
+            echo GridView::widget([
+                'dataProvider' => $dataProvider,
+                'options' => [
+                    'style' => 'table-layout:fixed;'
+                ],
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'id',
+                    'color',
+                    'status',
+                    'intact_percent',
+                    [
+                        'attribute' => 'action',
+                        'contentOptions' => ['white-space: normal'],
+                        'content' => function (Apple $apple) {
+                            if ($apple->canFall()) {
+                                return $this->render(
+                                    '_fall',
+                                    ['fallForm' => new FallForm(['apple_id' => $apple->id])
+                                ]);
+                            }
+                            if ($apple->canTakeABit()) {
+                                return $this->render(
+                                    '_take_a_bit',
+                                    [
+                                        'takeABitForm' => new TakeABitForm(['apple_id' => $apple->id]),
+                                        'maxPercent' => $apple->intact_percent
+                                    ]
+                                );
+                            }
+                        },
+                    ],
+                ],
+            ]);
+        ?>
 
     </div>
 </div>

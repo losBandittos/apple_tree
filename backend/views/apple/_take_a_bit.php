@@ -22,9 +22,7 @@ $form = ActiveForm::begin([
 </div>
 
 <div class="card" style="width: 50%; float: right;">
-    <div class="form-group">
         <?=Html::submitButton('Откусить', ['class' => 'btn btn-primary']);?>
-    </div>
 </div>
 
 <?ActiveForm::end();?>

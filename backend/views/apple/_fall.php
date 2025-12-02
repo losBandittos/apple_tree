@@ -13,8 +13,6 @@ $form = ActiveForm::begin([
 ]);
 echo $form->field($fallForm, 'apple_id')->hiddenInput(['value' => $fallForm->apple_id])->label(false);?>
 
-<div class="form-group">
-    <?=Html::submitButton('Сорвать', ['class' => 'btn btn-primary']);?>
-</div>
+<?=Html::submitButton('Сорвать', ['class' => 'btn btn-primary']);?>
 
 <?ActiveForm::end();?>
