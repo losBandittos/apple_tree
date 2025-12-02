@@ -71,6 +71,7 @@ class Apple extends ActiveRecord
         }
 
         $this->status = self::STATUS_ROTTED;
+        $this->intact_percent = 0;
         $this->save();
     }
 }
