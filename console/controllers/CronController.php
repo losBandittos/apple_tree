@@ -8,7 +8,7 @@ use yii\console\Controller;
 class CronController extends Controller {
 
     public function actionCheckAndDelete() {
-        $applesToDelete = Apple::find()->where(['status' => Apple::STATUS_FELL, 'intact_percent' => 0])->all();
+        $applesToDelete = Apple::find()->where(['status' => Apple::STATUS_EMPTY])->all();
         foreach($applesToDelete as $apple) {
             $apple->delete();
         }

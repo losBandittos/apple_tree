@@ -17,9 +17,11 @@ use yii\db\ActiveRecord;
 class Apple extends ActiveRecord
 {
     const TIME_BEFORE_ROTTED = 5 * 60 * 60;
+
     const STATUS_ON_TREE = 'on_tree';
     const STATUS_FELL = 'fell';
     const STATUS_ROTTED = 'rotted';
+    const STATUS_EMPTY = 'empty';
 
     const COLOR_GREEN = 'green';
     const COLOR_RED = 'red';
@@ -45,6 +47,10 @@ class Apple extends ActiveRecord
     }
 
     public function fall() {
+        if (!$this->canFall()) {
+            return;
+        }
+
         $this->status = self::STATUS_FELL;
         $this->fell_at = time();
         $this->save();
@@ -57,16 +63,23 @@ class Apple extends ActiveRecord
     }
 
     public function takeABit(int $percent) {
+        if (!$this->canTakeABit()) {
+            return;
+        }
+
         if ($percent > $this->intact_percent) {
             return;
         }
 
         $this->intact_percent -= $percent;
+        if ($this->intact_percent === 0) {
+            $this->status = self::STATUS_EMPTY;
+        }
         $this->save();
     }
 
     public function makeRotten() {
-        if (time() < $this->fell_at + self::TIME_BEFORE_ROTTED) {
+        if (time() < $this->fell_at + self::TIME_BEFORE_ROTTED || $this->status !== self::STATUS_FELL) {
             return;
         }
 

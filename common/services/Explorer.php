@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 class Explorer {
     static function getApplesProvider(): ActiveDataProvider {
         return new ActiveDataProvider([
-            'query' => Apple::find()->where(['>', 'intact_percent', 0]),
+            'query' => Apple::find()->where(['not', ['status' => Apple::STATUS_EMPTY]]),
             'pagination' => false,
             'sort' => false
         ]);
